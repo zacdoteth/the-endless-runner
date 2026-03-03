@@ -151,11 +151,40 @@ canvas{display:block}
 .gb{font-family:'Fredoka One',sans-serif;font-size:clamp(11px,1.8vw,14px);margin-top:10px;letter-spacing:1px}
 .tc{position:absolute;bottom:20px;font-size:7px;color:rgba(255,255,255,.15);letter-spacing:3px}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
-.title-bottom{position:absolute;bottom:3vh;display:flex;align-items:center;gap:16px;
-  font-family:'Fredoka One',sans-serif;font-size:clamp(9px,1.3vw,12px);letter-spacing:1px}
-.title-bottom-btn{color:rgba(255,255,255,.4);cursor:pointer;padding:5px 14px;
-  border:1px solid rgba(255,255,255,.12);border-radius:6px;transition:all .2s}
-.title-bottom-btn:hover{color:#fff;border-color:rgba(180,100,255,.5);box-shadow:0 0 12px rgba(180,100,255,.3)}
+.title-center{display:flex;flex-direction:column;align-items:center;gap:12px}
+.title-sub-btns{display:flex;gap:10px;margin-top:2px}
+.title-sub-btn{font-family:'Fredoka One',sans-serif;font-size:clamp(10px,1.6vw,13px);
+  color:rgba(255,255,255,.45);cursor:pointer;padding:6px 18px;letter-spacing:2px;
+  border:1px solid rgba(255,255,255,.12);border-radius:8px;transition:all .2s;
+  background:rgba(255,255,255,.03)}
+.title-sub-btn:hover{color:#fff;border-color:rgba(180,100,255,.5);
+  box-shadow:0 0 12px rgba(180,100,255,.3);background:rgba(180,100,255,.08)}
+.title-lb{position:fixed;bottom:12vh;right:4vw;width:clamp(200px,28vw,280px);
+  background:rgba(10,6,20,.75);backdrop-filter:blur(8px);
+  border:1px solid rgba(180,100,255,.2);border-radius:14px;
+  padding:14px 16px;font-family:'Fredoka One',sans-serif;
+  animation:lbSlide .8s ease .4s both;z-index:101;pointer-events:auto;
+  max-height:50vh;overflow-y:auto}
+@keyframes lbSlide{0%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:translateX(0)}}
+.title-lb-head{font-size:clamp(12px,1.8vw,15px);color:#cc88ff;letter-spacing:3px;
+  text-align:center;margin-bottom:10px;padding-bottom:8px;
+  border-bottom:1px solid rgba(180,100,255,.15)}
+.title-lb-row{display:flex;align-items:center;gap:8px;padding:5px 4px;
+  border-bottom:1px solid rgba(255,255,255,.04);font-size:clamp(10px,1.4vw,12px)}
+.title-lb-rank{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:10px;color:#fff;flex-shrink:0}
+.title-lb-rank.r1{background:linear-gradient(135deg,#ffd700,#ffaa00)}
+.title-lb-rank.r2{background:linear-gradient(135deg,#c0c0c0,#a0a0a0)}
+.title-lb-rank.r3{background:linear-gradient(135deg,#cd7f32,#b0692a)}
+.title-lb-rank.rn{background:rgba(255,255,255,.1)}
+.title-lb-name{flex:1;color:rgba(255,255,255,.7);letter-spacing:1px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.title-lb-score{color:#ffcc44;letter-spacing:1px;font-size:clamp(10px,1.5vw,13px)}
+.title-lb-zone{color:rgba(255,255,255,.25);font-size:9px;letter-spacing:0}
+.title-lb-empty{color:rgba(255,255,255,.2);font-size:11px;text-align:center;padding:12px 0;
+  font-style:italic;letter-spacing:1px}
+@media(max-width:600px){.title-lb{position:relative;right:auto;bottom:auto;width:90%;
+  margin:10px auto 0;max-height:30vh}}
 .char-sel{display:flex;gap:14px;margin-bottom:24px;justify-content:center;
   animation:charSelIn 1s ease .6s both}
 @keyframes charSelIn{0%{opacity:0;transform:translateY(15px)}100%{opacity:1;transform:translateY(0)}}
@@ -321,17 +350,20 @@ canvas{display:block}
 <div class="title-vignette" id="titleVig"></div>
 <div id="title">
   <div class="tm">the endless runner</div>
-  <div class="char-sel" id="charSel">
-    <div class="char-opt sel" data-char="doge" onclick="selectChar('doge')"><span class="char-icon">🐕</span>DOGE</div>
-    <div class="char-opt" data-char="frog" onclick="selectChar('frog')"><span class="char-icon">🐸</span>FROG</div>
-  </div>
-  <div class="tb" onclick="go()">PRESS START</div>
-  <div class="title-bottom">
+  <div class="title-center">
+    <div class="char-sel" id="charSel">
+      <div class="char-opt sel" data-char="doge" onclick="selectChar('doge')"><span class="char-icon">🐕</span>DOGE</div>
+      <div class="char-opt" data-char="frog" onclick="selectChar('frog')"><span class="char-icon">🐸</span>FROG</div>
+    </div>
+    <div class="tb" onclick="go()">PRESS START</div>
+    <div class="title-sub-btns">
+      <span class="title-sub-btn" onclick="toggleInfo()">HOW TO PLAY</span>
+      <span class="title-sub-btn" id="shopBtn" onclick="toggleShop()">SHOP</span>
+    </div>
     <span class="th" id="tBest"></span>
     <span class="title-coins" id="tCoins"></span>
-    <span class="title-bottom-btn" id="shopBtn" onclick="toggleShop()">SHOP</span>
-    <span class="title-bottom-btn" onclick="toggleInfo()">?</span>
   </div>
+  <div id="titleLeaderboard" class="title-lb"></div>
   <div class="tc">[as] games</div>
 </div>
 <div id="go">
@@ -843,7 +875,7 @@ const $={};
  'action','aP','combo','cN','cW','spin-ind','fx-bar','nearMiss',
  'speedLines','rgbSplit','zoomPunch','go','goT','goD','goC','goQ','goB','tBest','title',
  'zone-announce','zN','zT','zS','tutHint','tutText','infoPanel','vig',
- 'shopPanel','shopContent','shopBtn','tCoins','missionHud','goMissions','goEarnings','titleVig','charSel'].forEach(id=>{
+ 'shopPanel','shopContent','shopBtn','tCoins','missionHud','goMissions','goEarnings','titleVig','charSel','titleLeaderboard'].forEach(id=>{
   $[id]=document.getElementById(id);});
 // ═══ PERSISTENCE — Duolingo streak psychology ═══
 const _SAVE_DEFAULTS={best:0,bestCoins:0,bestCombo:0,runs:0,totalCoins:0,
@@ -866,6 +898,44 @@ function writeSave(s){try{localStorage.setItem('geraldSave',JSON.stringify(s))}c
 const SAVE=loadSave();
 if(SAVE.runs>0&&$['tBest'])$['tBest'].textContent=`your best: ${SAVE.best.toLocaleString()} meters \u2022 run #${SAVE.runs+1}`;
 if($['tCoins'])$['tCoins'].textContent=SAVE.totalCoins>0?`\u2605 ${SAVE.totalCoins} coins`:'';
+
+// ═══ LEADERBOARD — localStorage top runs ═══
+function loadLeaderboard(){
+  try{return JSON.parse(localStorage.getItem('runnerLeaderboard'))||[];}catch(e){return[];}
+}
+function saveLeaderboard(lb){try{localStorage.setItem('runnerLeaderboard',JSON.stringify(lb));}catch(e){}}
+function addToLeaderboard(score,coins,zone,char){
+  const lb=loadLeaderboard();
+  const date=new Date();
+  const tag=date.toLocaleDateString('en',{month:'short',day:'numeric'});
+  lb.push({score,coins,zone,char,tag,ts:Date.now()});
+  lb.sort((a,b)=>b.score-a.score);
+  if(lb.length>7)lb.length=7;
+  saveLeaderboard(lb);
+  return lb;
+}
+function renderLeaderboard(){
+  const el=document.getElementById('titleLeaderboard');
+  if(!el)return;
+  const lb=loadLeaderboard();
+  if(lb.length===0){
+    el.innerHTML='<div class="title-lb-head">\uD83C\uDFC6 LEADERBOARD</div><div class="title-lb-empty">no runs yet — be the first</div>';
+    return;
+  }
+  let h='<div class="title-lb-head">\uD83C\uDFC6 LEADERBOARD</div>';
+  lb.forEach((e,i)=>{
+    const rc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+    const icon=e.char==='doge'?'\uD83D\uDC15':e.char==='frog'?'\uD83D\uDC38':'\uD83C\uDFC3';
+    h+='<div class="title-lb-row">';
+    h+='<div class="title-lb-rank '+rc+'">'+(i+1)+'</div>';
+    h+='<span class="title-lb-name">'+icon+' '+e.tag+'</span>';
+    h+='<span class="title-lb-zone">Z'+(e.zone||1)+'</span> ';
+    h+='<span class="title-lb-score">'+e.score.toLocaleString()+'m</span>';
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+renderLeaderboard();
 
 // ═══ SHOP UPGRADES ═══
 const SHOP_UPGRADES=[
@@ -3246,6 +3316,10 @@ function showGameOver(){
   if($['goEarnings'])$['goEarnings'].textContent=
     '\u2605 +'+G.coins+' coins'+(missionBonus>0?' (+'+missionBonus+' bonus)':'')+' earned';
   writeSave(SAVE);
+  // Save to leaderboard
+  const _diedZone=(typeof getBiome==='function')?getBiome(Math.abs(G.pZ)).zone:1;
+  addToLeaderboard(G.score,G.coins,_diedZone,G.selectedChar||'doge');
+  renderLeaderboard();
   // Update title screen coin display for next time
   if($['tCoins'])$['tCoins'].textContent='\u2605 '+SAVE.totalCoins+' coins';
   $['goQ'].textContent=dm[Math.floor(Math.random()*dm.length)];
