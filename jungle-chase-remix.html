@@ -113,27 +113,39 @@ canvas{display:block}
   background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.5) 100%);
   transition:opacity .8s}
 .title-vignette.off{opacity:0}
-.tm{font-family:'Fredoka One',sans-serif;font-size:clamp(48px,12vw,110px);color:#fff;
-  letter-spacing:3px;text-transform:uppercase;position:absolute;top:12vh;
+.tm{font-family:'Fredoka One',sans-serif;font-size:clamp(38px,11vw,90px);color:#fff;
+  letter-spacing:4px;text-transform:uppercase;position:absolute;top:8vh;
+  text-align:center;width:90%;line-height:1.1;
   text-shadow:
     -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000,
     -4px 0 0 #000, 4px 0 0 #000, 0 -4px 0 #000, 0 4px 0 #000,
-    0 0 60px rgba(180,100,255,.5), 0 0 120px rgba(180,100,255,.2),
-    0 8px 0 rgba(80,30,120,.6), 0 12px 20px rgba(0,0,0,.5);
-  animation:titleDrop 1.2s cubic-bezier(.17,.67,.3,1.33) both}
+    0 0 60px rgba(180,100,255,.6), 0 0 120px rgba(180,100,255,.25),
+    0 8px 0 rgba(80,30,120,.7), 0 12px 24px rgba(0,0,0,.6);
+  background:linear-gradient(180deg,#fff 0%,#e8d0ff 40%,#cc88ff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 60px rgba(180,100,255,.5)) drop-shadow(0 8px 0 rgba(80,30,120,.7)) drop-shadow(0 12px 24px rgba(0,0,0,.6));
+  animation:titleDrop 1.2s cubic-bezier(.17,.67,.3,1.33) both, titleGlow 3s ease-in-out 1.5s infinite alternate}
 @keyframes titleDrop{
-  0%{transform:translateY(-60px) scale(1.3);opacity:0;filter:blur(12px)}
-  60%{transform:translateY(8px) scale(.95);opacity:1;filter:blur(0)}
+  0%{transform:translateY(-60px) scale(1.3);opacity:0}
+  60%{transform:translateY(8px) scale(.95);opacity:1}
   80%{transform:translateY(-3px) scale(1.02)}
-  100%{transform:translateY(0) scale(1);filter:blur(0)}}
+  100%{transform:translateY(0) scale(1)}}
+@keyframes titleGlow{
+  0%{filter:drop-shadow(0 0 60px rgba(180,100,255,.5)) drop-shadow(0 8px 0 rgba(80,30,120,.7)) drop-shadow(0 12px 24px rgba(0,0,0,.6))}
+  100%{filter:drop-shadow(0 0 80px rgba(180,100,255,.7)) drop-shadow(0 8px 0 rgba(80,30,120,.7)) drop-shadow(0 12px 24px rgba(0,0,0,.6))}}
 .ts{display:none}.ts2{display:none}
-.tb{font-family:'Fredoka One',sans-serif;font-size:clamp(14px,2.5vw,22px);color:#fff;
-  letter-spacing:6px;text-transform:uppercase;cursor:pointer;
+.tb{font-family:'Fredoka One',sans-serif;font-size:clamp(15px,2.8vw,24px);color:#fff;
+  letter-spacing:8px;text-transform:uppercase;cursor:pointer;
+  padding:12px 32px;border:2px solid rgba(180,100,255,.3);border-radius:12px;
+  background:linear-gradient(135deg,rgba(180,100,255,.1),rgba(120,60,200,.05));
   text-shadow:
     -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000,
-    0 0 20px rgba(180,100,255,.4);
+    0 0 24px rgba(180,100,255,.5);
+  transition:all .2s;
   animation:pressStartIn 1.5s ease both, pressStart 2s ease-in-out 1.5s infinite}
-@keyframes pressStart{0%,100%{opacity:1}50%{opacity:.3}}
+.tb:hover{background:linear-gradient(135deg,rgba(180,100,255,.2),rgba(120,60,200,.1));
+  border-color:rgba(180,100,255,.6);box-shadow:0 0 24px rgba(180,100,255,.3);transform:scale(1.05)}
+@keyframes pressStart{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes pressStartIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
 .th{font-family:'Fredoka One',sans-serif;font-size:clamp(9px,1.3vw,12px);color:rgba(255,200,100,.45);letter-spacing:1px}
 .gb{font-family:'Fredoka One',sans-serif;font-size:clamp(11px,1.8vw,14px);margin-top:10px;letter-spacing:1px}
@@ -144,13 +156,21 @@ canvas{display:block}
 .title-bottom-btn{color:rgba(255,255,255,.4);cursor:pointer;padding:5px 14px;
   border:1px solid rgba(255,255,255,.12);border-radius:6px;transition:all .2s}
 .title-bottom-btn:hover{color:#fff;border-color:rgba(180,100,255,.5);box-shadow:0 0 12px rgba(180,100,255,.3)}
-.char-sel{display:flex;gap:16px;margin-bottom:24px;justify-content:center}
-.char-opt{font-family:'Fredoka One',sans-serif;font-size:clamp(13px,2vw,18px);color:rgba(255,255,255,.35);
-  padding:8px 22px;border:2px solid rgba(255,255,255,.12);border-radius:8px;cursor:pointer;
-  letter-spacing:2px;transition:all .2s;user-select:none}
-.char-opt:hover{color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.25)}
-.char-opt.sel{color:#fff;border-color:#cc88ff;box-shadow:0 0 16px rgba(180,100,255,.5),inset 0 0 8px rgba(180,100,255,.15);
-  text-shadow:0 0 12px rgba(180,100,255,.6)}
+.char-sel{display:flex;gap:14px;margin-bottom:24px;justify-content:center;
+  animation:charSelIn 1s ease .6s both}
+@keyframes charSelIn{0%{opacity:0;transform:translateY(15px)}100%{opacity:1;transform:translateY(0)}}
+.char-opt{font-family:'Fredoka One',sans-serif;font-size:clamp(14px,2.5vw,20px);color:rgba(255,255,255,.4);
+  padding:10px 26px;border:2px solid rgba(255,255,255,.15);border-radius:12px;cursor:pointer;
+  letter-spacing:3px;transition:all .25s cubic-bezier(.2,.8,.3,1);user-select:none;
+  background:rgba(255,255,255,.04);backdrop-filter:blur(4px);
+  display:flex;align-items:center;gap:8px}
+.char-opt:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.3);
+  transform:scale(1.05);background:rgba(255,255,255,.08)}
+.char-opt.sel{color:#fff;border-color:#cc88ff;
+  background:linear-gradient(135deg,rgba(180,100,255,.15),rgba(120,60,200,.1));
+  box-shadow:0 0 20px rgba(180,100,255,.5),0 0 40px rgba(180,100,255,.15),inset 0 0 12px rgba(180,100,255,.1);
+  text-shadow:0 0 14px rgba(180,100,255,.6);transform:scale(1.05)}
+.char-opt .char-icon{font-size:clamp(18px,3vw,26px);line-height:1}
 #go{position:fixed;inset:0;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center}
 #go.on{display:flex;background:rgba(0,0,0,.92)}
 .gt{font-family:'Fredoka One',sans-serif;font-size:clamp(36px,8vw,72px);color:#fff;animation:si .5s ease;
@@ -302,8 +322,8 @@ canvas{display:block}
 <div id="title">
   <div class="tm">the endless runner</div>
   <div class="char-sel" id="charSel">
-    <div class="char-opt sel" data-char="doge" onclick="selectChar('doge')">DOGE</div>
-    <div class="char-opt" data-char="frog" onclick="selectChar('frog')">FROG</div>
+    <div class="char-opt sel" data-char="doge" onclick="selectChar('doge')"><span class="char-icon">🐕</span>DOGE</div>
+    <div class="char-opt" data-char="frog" onclick="selectChar('frog')"><span class="char-icon">🐸</span>FROG</div>
   </div>
   <div class="tb" onclick="go()">PRESS START</div>
   <div class="title-bottom">
@@ -1966,8 +1986,8 @@ _gltfLoader.setDRACOLoader(_dracoLoader);
 // ─── OBSTACLE GLB TEMPLATES ───
 const glbObstacles={tiki:null,cactus:null,poisonMush:null,spikeTrap:null,jackOLantern:null};
 const OBS_GLB_FILES=[
-  {key:'spikeTrap',file:'public/obstacles/Meshy_AI_Bear_Trap_0301181154_texture.glb',size:1.0,emissive:0x664422,emI:0.3},
-  {key:'jackOLantern',file:'public/obstacles/Meshy_AI_pumpkin_has_a_vibrant_0301181658_texture.glb',size:1.2,emissive:0xff6622,emI:0.5},
+  {key:'spikeTrap',file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/obstacles/Meshy_AI_Bear_Trap_0301181154_texture.glb',size:1.0,emissive:0x664422,emI:0.3},
+  {key:'jackOLantern',file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/obstacles/Meshy_AI_pumpkin_has_a_vibrant_0301181658_texture.glb',size:1.2,emissive:0xff6622,emI:0.5},
 ];
 OBS_GLB_FILES.forEach(def=>{
   _gltfLoader.load(def.file,gltf=>{
@@ -1992,8 +2012,8 @@ OBS_GLB_FILES.forEach(def=>{
 // ─── ENEMY GLB TEMPLATES ───
 const glbEnemies={slimebro:null,funguy:null,hotdog:null,eyeball:null,rockhead:null,bubblegum:null};
 const ENEMY_GLB_FILES=[
-  {key:'slimebro', file:'public/enemies/Meshy_AI_Coral_Rage_0301182207_texture.glb',size:1.0,emissive:0x448811,emI:0.3},
-  {key:'funguy',   file:'public/items/Meshy_AI_Toothy_Plant_0301181529_texture.glb',size:1.0,emissive:0x336622,emI:0.3},
+  {key:'slimebro', file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/enemies/Meshy_AI_Coral_Rage_0301182207_texture.glb',size:1.0,emissive:0x448811,emI:0.3},
+  {key:'funguy',   file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_Toothy_Plant_0301181529_texture.glb',size:1.0,emissive:0x336622,emI:0.3},
 ];
 ENEMY_GLB_FILES.forEach(def=>{
   _gltfLoader.load(def.file,gltf=>{
@@ -2022,8 +2042,8 @@ ENEMY_GLB_FILES.forEach(def=>{
 // ─── SCENERY GLB TEMPLATES ───
 const glbScenery={jungleTree:null,glowMushroom:null,crystalCluster:null,stoneRuins:null,volcanicRock:null,woodenBridge:null,grassBlock:null};
 const SCENERY_GLB_FILES=[
-  {key:'jungleTree',file:'public/scenery/Meshy_AI_Smiling_Sunflower_0301181807_texture.glb',size:3.0,emissive:0x446622,emI:0.3},
-  {key:'grassBlock',file:'public/scenery/Meshy_AI_Grass_Block_0301222601_texture.glb',size:4.0,emissive:0x336622,emI:0.25},
+  {key:'jungleTree',file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/scenery/Meshy_AI_Smiling_Sunflower_0301181807_texture.glb',size:3.0,emissive:0x446622,emI:0.3},
+  {key:'grassBlock',file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/scenery/Meshy_AI_Grass_Block_0301222601_texture.glb',size:4.0,emissive:0x336622,emI:0.25},
 ];
 SCENERY_GLB_FILES.forEach(def=>{
   _gltfLoader.load(def.file,gltf=>{
@@ -2066,11 +2086,11 @@ SCENERY_GLB_FILES.forEach(def=>{
 // ─── ITEM / COLLECTIBLE GLB TEMPLATES ───
 const glbItems={potion:null,sunglasses:null,sneaker:null,discoBall:null,burrito:null,rubberDuck:null};
 const ITEM_GLB_FILES=[
-  {key:'potion',     file:'public/items/Meshy_AI_A_round_light_green__0301181620_texture.glb',size:0.6,emissive:0x44ff88,emI:0.5},
-  {key:'garlic',     file:'public/items/Meshy_AI_garlic_has_a_rounded__0301181630_texture.glb',size:0.5,emissive:0xddddaa,emI:0.35},
-  {key:'magnet',     file:'public/items/Meshy_AI_magnet_has_a_glossy__0301181646_texture.glb',size:0.5,emissive:0xff4444,emI:0.4},
-  {key:'jalapeno',   file:'public/items/Meshy_AI_Spicy_Jalapeno_0301181518_texture.glb',size:0.5,emissive:0xff6600,emI:0.45},
-  {key:'mushroom',   file:'public/items/Meshy_AI_Yellow_mushroom_The__0301181552_texture.glb',size:0.6,emissive:0xffaa22,emI:0.45},
+  {key:'potion',     file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_A_round_light_green__0301181620_texture.glb',size:0.6,emissive:0x44ff88,emI:0.5},
+  {key:'garlic',     file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_garlic_has_a_rounded__0301181630_texture.glb',size:0.5,emissive:0xddddaa,emI:0.35},
+  {key:'magnet',     file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_magnet_has_a_glossy__0301181646_texture.glb',size:0.5,emissive:0xff4444,emI:0.4},
+  {key:'jalapeno',   file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_Spicy_Jalapeno_0301181518_texture.glb',size:0.5,emissive:0xff6600,emI:0.45},
+  {key:'mushroom',   file:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_Yellow_mushroom_The__0301181552_texture.glb',size:0.6,emissive:0xffaa22,emI:0.45},
 ];
 ITEM_GLB_FILES.forEach(def=>{
   _gltfLoader.load(def.file,gltf=>{
@@ -2100,7 +2120,7 @@ ITEM_GLB_FILES.forEach(def=>{
     }
   },undefined,()=>{});
 });
-_gltfLoader.load('public/items/Meshy_AI_Bitcoin_Gold_Coin_0301033649_texture.glb',gltf=>{
+_gltfLoader.load('https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_Bitcoin_Gold_Coin_0301033649_texture.glb',gltf=>{
   const model=gltf.scene;
   // Normalize scale — fit within ~0.5 unit radius
   const box=new THREE.Box3().setFromObject(model);
@@ -2118,7 +2138,7 @@ _gltfLoader.load('public/items/Meshy_AI_Bitcoin_Gold_Coin_0301033649_texture.glb
   glbCoinTemplate=model;
   // Coins are now InstancedMesh — no retrofit needed
 },undefined,e=>console.warn('Bitcoin GLB load failed:',e));
-_gltfLoader.load('public/items/Meshy_AI_The_Toadstool_Targe_–_0301033746_texture.glb',gltf=>{
+_gltfLoader.load('https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/items/Meshy_AI_The_Toadstool_Targe_–_0301033746_texture.glb',gltf=>{
   const model=gltf.scene;
   const box=new THREE.Box3().setFromObject(model);
   const size=box.getSize(new THREE.Vector3());
@@ -2522,7 +2542,7 @@ drawHP(100);
 // ═══ CHARACTER SELECT + GLB LOADER ═══
 const CHARACTERS={
   doge:{
-    dir:'public/characters/doge/',
+    dir:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/characters/doge/',
     base:'Meshy_AI_Animation_Running_withSkin.glb',
     extras:[
       {file:'Meshy_AI_Animation_Regular_Jump_withSkin.glb',key:'jump'},
@@ -2532,7 +2552,7 @@ const CHARACTERS={
     scale:0.014, emissive:0x443322, emI:0.4, posY:0.15
   },
   frog:{
-    dir:'public/characters/frog/',
+    dir:'https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/characters/frog/',
     base:'Meshy_AI_Animation_Running_withSkin.glb',
     extras:[
       {file:'Meshy_AI_Animation_Unsteady_Walk_withSkin.glb',key:'jump'},
@@ -2622,7 +2642,7 @@ let hotdogMixer=null,hotdogAnims={},hotdogModel=null;
 (function loadHotdogBoss(){
   const loader=new THREE.GLTFLoader();
   loader.setDRACOLoader(_dracoLoader);
-  loader.load('public/characters/hotdog/Meshy_AI_Animation_Running_withSkin.glb',gltf=>{
+  loader.load('https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/characters/hotdog/Meshy_AI_Animation_Running_withSkin.glb',gltf=>{
     hotdogModel=gltf.scene;
     // Use fixGLB for consistent normalization — target ~4 units tall (big boss!)
     fixGLB(hotdogModel,4.0,{emissive:0x553322,emissiveIntensity:0.45});
@@ -2647,7 +2667,7 @@ let hotdogMixer=null,hotdogAnims={},hotdogModel=null;
       {file:'Meshy_AI_Animation_Walking_withSkin.glb',key:'walk'},
     ];
     extras.forEach(ex=>{
-      loader.load('public/characters/hotdog/'+ex.file,g2=>{
+      loader.load('https://raw.githubusercontent.com/zacdoteth/the-endless-runner/main/public/characters/hotdog/'+ex.file,g2=>{
         if(g2.animations.length){
           hotdogAnims[ex.key]=hotdogMixer.clipAction(g2.animations[0]);
           hotdogAnims[ex.key].enabled=true;
@@ -3424,8 +3444,9 @@ function _rebuildGrass(){
   addSection('SCENERY');
   addSlider('tree scale',0.5,8,0.1,4.0,(v)=>{G._dbgTreeScale=v;});
 
-  // Toggle with P key
-  let dbgVisible=false;panel.style.display='none';
+  // Toggle with P key — hidden by default for production
+  let dbgVisible=false;
+  panel.style.display='none';
   document.addEventListener('keydown',e=>{
     if(e.code==='KeyP'){dbgVisible=!dbgVisible;panel.style.display=dbgVisible?'block':'none';}
   });

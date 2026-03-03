@@ -3425,7 +3425,7 @@ function _rebuildGrass(){
   addSlider('tree scale',0.5,8,0.1,4.0,(v)=>{G._dbgTreeScale=v;});
 
   // Toggle with P key
-  let dbgVisible=true;
+  let dbgVisible=false;panel.style.display='none';
   document.addEventListener('keydown',e=>{
     if(e.code==='KeyP'){dbgVisible=!dbgVisible;panel.style.display=dbgVisible?'block':'none';}
   });
